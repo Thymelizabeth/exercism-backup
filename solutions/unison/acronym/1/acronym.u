@@ -1,0 +1,11 @@
+acronym.abbreviate : Text -> Text
+acronym.abbreviate = clean >> split >> getLetters >> fromCharList >> toUppercase
+
+acronym.clean : Text -> Text
+acronym.clean = filter (x -> x == ?- || not (is punctuation x))
+
+acronym.split : Text -> [Text]
+acronym.split = splitOn (not word)
+
+acronym.getLetters : [Text] -> [Char]
+acronym.getLetters = flatMap (head >> toList)
