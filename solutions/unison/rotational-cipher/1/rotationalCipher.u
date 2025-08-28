@@ -1,0 +1,9 @@
+exercism.rotationalCipher.rotate : Text -> Nat -> Text
+exercism.rotationalCipher.rotate text shiftKey =
+			shiftKey' = mod shiftKey 26
+			map (cases
+			 c
+			   | not <| isLetter c -> c
+			   | isUpper c && getOrElse ?ā (Char.fromNat (Char.toNat c + shiftKey')) > ?Z || isLower c && getOrElse ?ā (Char.fromNat (toNat c + shiftKey')) > ?z -> getOrElse ?ā <| Char.fromNat (toNat c + shiftKey' - 26)
+			   | otherwise -> getOrElse ?ā <| Char.fromNat (toNat c + shiftKey')
+			 ) text
