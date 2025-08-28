@@ -1,0 +1,40 @@
+exercism.listOps.append : [a] -> [a] -> [a]
+exercism.listOps.append list1 list2 = list1 ++ list2
+
+exercism.listOps.concat : [[a]] -> [a]
+exercism.listOps.concat = cases
+	       [] -> []
+	       [x] -> x
+	       [x, y] ++ rest -> concat (append x y +: rest)
+
+exercism.listOps.filter : (a -> Boolean) -> [a] -> [a]
+exercism.listOps.filter predicate = cases
+	       [] -> []
+	       x +: rest -> if predicate x
+	       	    	    then x +: filter predicate rest
+			    else filter predicate rest
+
+exercism.listOps.length : [a] -> Nat
+exercism.listOps.length = cases
+	       [] -> 0
+	       _ +: rest -> 1 + length rest
+
+exercism.listOps.map : (a -> b) -> [a] -> [b]
+exercism.listOps.map function = cases
+	    [] -> []
+	    x +: rest -> function x +: map function rest
+
+exercism.listOps.foldl : (a -> b -> a) -> a -> [b] -> a
+exercism.listOps.foldl function initial = cases
+	      [] -> initial
+	      x +: rest -> foldl function (function initial x) rest
+
+exercism.listOps.foldr : (a -> b -> a) -> a -> [b] -> a
+exercism.listOps.foldr function initial = cases
+	      [] -> initial
+	      x +: rest -> function (foldr function initial rest) x
+
+exercism.listOps.reverse : [a] -> [a]
+exercism.listOps.reverse = cases
+		[] -> []
+		rest :+ x -> x +: reverse rest
