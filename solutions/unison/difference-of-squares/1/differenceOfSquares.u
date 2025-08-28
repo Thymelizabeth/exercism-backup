@@ -1,0 +1,14 @@
+exercism.differenceOfSquares.squareOfSum : Nat -> Nat
+exercism.differenceOfSquares.squareOfSum number = range 1 (number + 1)
+					 	   |> sum
+						   |> flip pow 2
+
+exercism.differenceOfSquares.sumOfSquares : Nat -> Nat
+exercism.differenceOfSquares.sumOfSquares number = range 1 (number + 1)
+					   	    |> map (flip pow 2)
+					  	    |> sum
+
+exercism.differenceOfSquares.difference : Nat -> Nat
+exercism.differenceOfSquares.difference number = (&&&) sumOfSquares squareOfSum number
+					       	  |> uncurry subtractToInt
+						  |> abs
