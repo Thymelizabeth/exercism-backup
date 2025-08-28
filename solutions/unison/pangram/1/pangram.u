@@ -1,0 +1,2 @@
+exercism.pangram.isPangram : Text -> Boolean
+exercism.pangram.isPangram sentence = List.all (letter -> Text.contains letter (toLowercase sentence)) (List.map toText (range ?a ?z))
