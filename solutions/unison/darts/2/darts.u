@@ -1,0 +1,7 @@
+exercism.darts.score : Float -> Float -> Nat
+exercism.darts.score x y = match sqrt (pow x 2.0 + pow y 2.0) with
+	    r
+		| r <= 1.0 -> 10
+	     	| r <= 5.0 -> 5
+	     	| r <= 10.0 -> 1
+	    _ -> 0
