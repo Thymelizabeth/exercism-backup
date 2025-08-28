@@ -1,0 +1,17 @@
+raindrops.raindropMap : Map Nat Text
+raindrops.raindropMap = fromList [ (3, "Pling")
+		      		             , (5, "Plang")
+				                 , (7, "Plong")
+				                 ]
+
+raindrops.convert : Nat -> Text
+raindrops.convert n =
+		  word = foldLeftWithKey (divisorsToWord n) "" raindropMap
+		  if isEmpty word
+		    then Nat.toText n
+		    else word
+
+raindrops.divisorsToWord : Nat -> Text -> Nat -> Text -> Text
+raindrops.divisorsToWord n acc k v = acc ++ (if (mod n k) == 0
+			       	                         then v
+					                         else "")
