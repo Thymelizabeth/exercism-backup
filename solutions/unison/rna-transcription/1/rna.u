@@ -1,0 +1,12 @@
+exercism.rna.toRNA : Text -> Optional Text
+exercism.rna.toRNA = map fromCharList << sequenceOptional << map (cases
+					?G -> Some ?C
+					?C -> Some ?G
+					?T -> Some ?A
+					?A -> Some ?U
+					_  -> None) << toCharList
+		   
+exercism.rna.sequenceOptional : [Optional a] -> Optional [a]
+exercism.rna.sequenceOptional = cases
+			      [] -> Some []
+			      xs -> List.sequenceOptional xs
