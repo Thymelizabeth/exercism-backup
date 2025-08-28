@@ -1,0 +1,24 @@
+unique type exercism.dndCharacter.Character = 
+                                     { strength : Nat
+                                     , dexterity : Nat
+                                     , constitution : Nat
+                                     , intelligence : Nat
+                                     , wisdom : Nat
+                                     , charisma : Nat
+                                     , hitpoints : Nat
+                                     }
+
+exercism.dndCharacter.modifier : Nat -> Int
+exercism.dndCharacter.modifier score =
+  (subtractToInt score 10) / +2
+
+exercism.dndCharacter.ability_ : '{Random} Nat
+exercism.dndCharacter.ability_ = do
+              dice = (replicate 4 do Random.natIn 1 7)
+              minDie = getOrElse 0 <| minimum dice
+              sum (deleteFirst (d -> d Nat.== minDie) dice)
+
+exercism.dndCharacter.character : '{Random} Character
+exercism.dndCharacter.character = do
+              result = Character (ability_ ()) (ability_ ()) (ability_ ()) (ability_ ()) (ability_ ()) (ability_ ()) 0
+              hitpoints.set (abs (+10 + modifier (constitution result))) result
