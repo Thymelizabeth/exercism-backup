@@ -1,0 +1,48 @@
+unique type exercism.yacht.Category
+  = Ones
+  | Twos
+  | Threes
+  | Fours
+  | Fives
+  | Sixes
+  | FullHouse
+  | FourOfAKind
+  | LittleStraight
+  | BigStraight
+  | Choice
+  | Yacht
+
+exercism.yacht.yacht : Category -> [Nat] -> Nat
+exercism.yacht.yacht category = match category with
+	    	       	 Ones -> numberOf 1
+			 Twos -> numberOf 2
+			 Threes -> numberOf 3
+			 Fours -> numberOf 4
+			 Fives -> numberOf 5
+			 Sixes -> numberOf 6
+			 FullHouse -> fullHouse
+			 FourOfAKind -> kind4
+			 LittleStraight -> straight [1,2,3,4,5]
+			 BigStraight -> straight [2,3,4,5,6]
+			 Choice -> choice
+			 Yacht -> kind5
+
+exercism.yacht.numberOf : Nat -> [Nat] -> Nat
+exercism.yacht.numberOf n dice = n * (count (x -> x == n) dice)
+
+exercism.yacht.fullHouse : [Nat] -> Nat
+exercism.yacht.fullHouse dice = (diceCount -> if (contains 3 diceCount) && (contains 2 diceCount) then sum dice else 0) <| List.foldRight (x -> updateAt (d -> d + 1) (x - 1)) (of 0 6) dice
+
+exercism.yacht.kind4 : [Nat] -> Nat
+exercism.yacht.kind4 dice = 4 * (getOrElse 0 (head (filter (x -> countElement x dice >= 4) dice)))
+
+exercism.yacht.straight : [Nat] -> [Nat] -> Nat
+exercism.yacht.straight combo = (dice -> if List.equals (==) dice combo then 30 else 0) << List.sort
+
+exercism.yacht.choice : [Nat] -> Nat
+exercism.yacht.choice = sum
+
+exercism.yacht.kind5 : [Nat] -> Nat
+exercism.yacht.kind5 dice = if size (distinct dice) == 1 then 50 else 0
+
+>kind4 [4,4,4,4,4]
