@@ -1,0 +1,7 @@
+exercism.bob.response : Text -> Text
+exercism.bob.response = cases
+		      sentence | isEmpty sentence || (all isWhitespace (toCharList sentence)) -> "Fine. Be that way!"
+		      sentence | (endsWith "?" (trim sentence)) && (sentence == toUppercase sentence) && not (isEmpty (filter isLetter (toCharList sentence))) -> "Calm down, I know what I'm doing!"
+		      sentence | (sentence == toUppercase sentence) && not (isEmpty (filter isLetter (toCharList sentence))) -> "Whoa, chill out!"
+		      sentence | endsWith "?" (trim sentence) -> "Sure."
+		      _ -> "Whatever."
