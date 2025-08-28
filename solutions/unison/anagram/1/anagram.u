@@ -1,0 +1,10 @@
+exercism.anagram.findAnagrams : Text -> [Text] -> [Text]
+exercism.anagram.findAnagrams subject = List.filter (isAnagramOf subject)
+
+exercism.anagram.isAnagramOf : Text -> Text -> Boolean
+exercism.anagram.isAnagramOf s c =
+			     subject = toLowercase s
+			     match toLowercase c with
+			     	   candidate | subject == candidate -> false
+			     	       	     | size subject != size candidate -> false
+				       	     | otherwise -> on (equals (==)) (List.sort << toCharList) candidate subject
