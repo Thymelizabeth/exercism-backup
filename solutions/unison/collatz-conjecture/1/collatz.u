@@ -1,0 +1,7 @@
+collatzConjecture.steps : Nat -> Optional Nat
+collatzConjecture.steps = cases 
+  n 
+    | n == 0 -> None
+    | n == 1 -> Some 0
+    | isEven n -> steps (n / 2) |> Optional.map (x -> x + 1)
+    | otherwise -> steps (3 * n + 1) |> Optional.map (x -> x + 1)
