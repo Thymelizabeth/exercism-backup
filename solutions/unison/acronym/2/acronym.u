@@ -1,0 +1,32 @@
+acronym.abbreviate : Text -> Text
+acronym.abbreviate = clean >> split >> getLetters >> fromCharList >> toUppercase
+
+acronym.clean : Text -> Text
+acronym.clean = toCharList >> filter (x -> x == ?- || not (is punctuation x)) >> fromCharList
+
+acronym.split : Text -> [Text]
+acronym.split = splitOn (not word)
+
+acronym.getLetters : [Text] -> [Char]
+acronym.getLetters = flatMap (head >> toList)
+
+splitOn : Class -> Text -> [Text]
+splitOn sep text = 
+  sepp = char sep
+  pat = sepMany (some sepp) (Pattern.capture (some (char (Class.not sep)))) 
+  Each.toList do eachCapture pat (drop sepp text)
+
+eachCapture : Pattern t -> t -> {Each} t
+eachCapture p t =
+  (ts, _) = optionally (Pattern.run p t)
+  each ts
+
+optionally : Optional a -> {Each} a
+optionally = cases
+  None   -> Each.fail()
+  Some a -> lazily do emit a
+
+drop : Pattern t -> t -> t
+drop p t = match Pattern.run p t with
+  Some (_, r) -> r
+  None        -> t
