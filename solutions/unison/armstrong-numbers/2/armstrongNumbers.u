@@ -1,0 +1,9 @@
+exercism.armstrongNumbers.isArmstrongNumber : Nat -> Boolean
+exercism.armstrongNumbers.isArmstrongNumber number =
+				   digits = getDigits number
+				   number == sum (map (n -> Nat.pow n (size digits)) digits)
+
+exercism.armstrongNumbers.getDigits : Nat -> [Nat]
+exercism.armstrongNumbers.getDigits = cases
+			   n | n < 10 -> [n]
+			   n -> getDigits (n / 10) :+ mod n 10
