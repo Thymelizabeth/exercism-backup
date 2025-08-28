@@ -1,0 +1,47 @@
+unique type yacht.Category
+  = Ones
+  | Twos
+  | Threes
+  | Fours
+  | Fives
+  | Sixes
+  | FullHouse
+  | FourOfAKind
+  | LittleStraight
+  | BigStraight
+  | Choice
+  | Yacht
+
+yacht.yacht : Category -> [Nat] -> Nat
+yacht.yacht category = match category with
+                Ones -> numberOf 1
+                Twos -> numberOf 2
+                Threes -> numberOf 3
+                Fours -> numberOf 4
+                Fives -> numberOf 5
+                Sixes -> numberOf 6
+                FullHouse -> fullHouse
+                FourOfAKind -> kind4
+                LittleStraight -> straight [1,2,3,4,5]
+                BigStraight -> straight [2,3,4,5,6]
+                Choice -> sum
+                Yacht -> kind5
+
+yacht.numberOf : Nat -> [Nat] -> Nat
+yacht.numberOf n dice = n * (count (x -> x == n) dice)
+
+yacht.fullHouse : [Nat] -> Nat
+yacht.fullHouse dice = (diceCount -> if (List.contains 3 diceCount) && (contains 2 diceCount) then sum dice else 0) <| List.foldRight (x -> updateAt (d -> d + 1) (x - 1)) (of 0 6) dice
+
+yacht.kind4 : [Nat] -> Nat
+yacht.kind4 dice = 4 * (getOrElse 0 (head (filter (x -> countElement x dice >= 4) dice)))
+
+yacht.straight : [Nat] -> [Nat] -> Nat
+yacht.straight combo = (dice -> if equals (==) dice combo then 30 else 0) << List.sort
+
+equals eq xs ys =
+  use List size
+  (size xs === size ys) && (List.all id (List.zipWith eq xs ys))
+
+yacht.kind5 : [Nat] -> Nat
+yacht.kind5 dice = if size (distinct dice) == 1 then 50 else 0
