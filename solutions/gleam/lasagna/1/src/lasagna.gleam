@@ -1,0 +1,21 @@
+pub fn expected_minutes_in_oven() -> Int {
+  40
+}
+
+pub fn remaining_minutes_in_oven(minutes_in_oven: Int) -> Int {
+  expected_minutes_in_oven() - minutes_in_oven
+}
+
+pub fn preparation_time_in_minutes(layers: Int) -> Int {
+  let minutes_per_layer: Int = 2
+  minutes_per_layer * layers
+}
+
+pub fn total_time_in_minutes(layers: Int, minutes_in_oven: Int) -> Int {
+  minutes_in_oven + preparation_time_in_minutes(layers)
+}
+
+// Please define the alarm function
+pub fn alarm() {
+  "Ding!"
+}
