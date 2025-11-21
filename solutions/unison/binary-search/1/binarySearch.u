@@ -1,0 +1,11 @@
+use data Array
+
+binarySearch.find : Array Nat -> Nat -> Optional Int
+binarySearch.find list item =
+  mid = Array.size list / 2
+  Optional.flatMap 
+    (midElem -> match Universal.ordering item midElem with
+      Less -> binarySearch.find (Array.take mid list) item
+      Equal -> Some (Nat.toInt mid)
+      Greater -> Optional.map (result -> result + Nat.toInt mid + +1) (binarySearch.find (Array.drop (mid + 1) list) item))
+    (Array.at mid list)
