@@ -1,0 +1,12 @@
+collatzConjecture.steps : Nat -> Optional Nat
+collatzConjecture.steps = cases 
+  n 
+    | n == 0 -> None
+    | otherwise -> Some (stepsAcc 0 n)
+
+collatzConjecture.stepsAcc : Nat -> Nat -> Nat
+collatzConjecture.stepsAcc acc = cases
+  n
+    | n <= 1 -> acc
+    | isEven n -> stepsAcc (acc + 1) (n / 2)
+    | otherwise -> stepsAcc (acc + 1) (n * 3 + 1)
